@@ -1,0 +1,38 @@
+{
+  "name": "eve-industry-helper",
+  "version": "0.0.1",
+  "description": "Eve Industry Helper is a tool to help you manage your industry in EVE Online.",
+  "main": "index.js",
+  "scripts": {
+    "start": "cross-env NODE_ENV=development node sources/app.js",
+    "production": "cross-env NODE_ENV=production node sources/app.js",
+    "test:services": "cross-env NODE_ENV=test mocha ./tests/initTests.js ./tests/services/*.js",
+    "lint": "eslint --ignore-path .gitignore .",
+    "alltests": "run-s lint test:*"
+  },
+  "keywords": [],
+  "author": {
+    "name": "Mia Kloxader",
+    "url": "https://github.com/Mia-Kloxader"
+  },
+  "bugs": {
+    "url": "https://github.com/Mia-Kloxader/Eve-Industry-Helper/issues"
+  },
+  "license": "BSD-3-Clause",
+  "devDependencies": {
+    "chai": "4.2.0",
+    "chai-as-promised": "7.1.1",
+    "eslint": "7.1.0",
+    "eslint-config-strongloop": "2.1.0",
+    "mocha": "7.2.0",
+    "npm-run-all": "4.1.5"
+  },
+  "dependencies": {
+    "config": "3.3.1",
+    "cross-env": "7.0.2",
+    "crypto": "1.0.1",
+    "sqlite-async": "1.1.0",
+    "sqlite3": "4.2.0",
+    "winston": "3.2.1"
+  }
+}

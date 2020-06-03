@@ -1,0 +1,6 @@
+{
+  "Env": "test",
+  "Database": {
+    "filename": ":memory:"
+  }
+}

@@ -1,0 +1,6 @@
+{
+  "Env": "development",
+  "Database": {
+    "filename": "EveIndustryManager-Dev.sql"
+  }
+}
