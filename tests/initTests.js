@@ -10,9 +10,17 @@ global.chai = require('chai');
 chai.use(require('chai-as-promised'));
 chai.should();
 
-before(function() {
-    require('../sources/onAppStart')();
+const DatabaseService = require("../sources/services/dbService");
+const dbService = new DatabaseService();
+
+before(async () => {
 });
 
-after(function() {
+beforeEach(async () => {
+})
+
+after(async () => {
 });
+
+afterEach( async () => {
+})

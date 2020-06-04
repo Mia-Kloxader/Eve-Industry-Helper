@@ -9,22 +9,18 @@ const log = require("../../sources/logger").createLogger({
     context: 'db-service-test'
 });
 
-const dbService = require('./../../sources/services/dbService');
+const DatabaseService = require("../../sources/services/dbService");
+const dbService = new DatabaseService();
 
 describe('dbService initialization', () => {
-    it('dbService.create() success', () => {
-        return dbService.create()
-            .should.be.fulfilled;
-    });
-
     it('dbService.loadTemplate() success', () => {
         return dbService.loadTemplate()
-            .should.be.fulfilled;
+            .should.eventually.deep.equal(true);
     });
 
     it('dbService.loadTemplate() success already loaded', () => {
         return dbService.loadTemplate()
-            .should.be.fulfilled;
+            .should.eventually.deep.equal(true);
     });
 
     it('dbService.close() success', () => {
