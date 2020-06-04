@@ -5,8 +5,8 @@
  */
 
 class user {
-    constructor(name, password, id, salt) {
-        this.name = name;
+    constructor(username, password, id, salt) {
+        this.username = username;
         this.password = password;
         this.id = id;
         this.salt = salt;

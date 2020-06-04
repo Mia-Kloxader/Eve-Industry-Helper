@@ -6,7 +6,7 @@
 
 class credentials {
     constructor(name, password) {
-        this.name = name;
+        this.username = name;
         this.password = password;
     }
 }
