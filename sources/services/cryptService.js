@@ -4,7 +4,6 @@
  * Created by Mia Kloxader on 03/06/20
  */
 
-const config = require('config');
 const crypto = require('crypto');
 
 const log = require("../../sources/logger").createLogger({
