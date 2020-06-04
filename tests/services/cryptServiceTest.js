@@ -20,7 +20,7 @@ describe('cryptService basics', () => {
     it('cryptService.createHash() success', () => {
         const toHash = "Password";
 
-        cryptService.generateSalt()
+        return cryptService.generateSalt()
             .then(res => {
                 return cryptService.createHash(toHash, res)
             })
@@ -31,7 +31,7 @@ describe('cryptService basics', () => {
         const toHash = "Password";
         let salt = undefined;
 
-        cryptService.generateSalt()
+        return cryptService.generateSalt()
             .then(res => {
                 salt = res;
                 return cryptService.createHash(toHash, res)
@@ -39,7 +39,7 @@ describe('cryptService basics', () => {
             .then(res => {
                 return cryptService.validatePassword(toHash, res, salt);
             })
-            .should.be.fulfilled;
+            .should.eventually.deep.equal(true);
     });
 
     it('cryptService.validatePassword() invalid password', () => {
@@ -47,7 +47,7 @@ describe('cryptService basics', () => {
         const invalidPassword = "InvalidPassword";
         let salt = undefined;
 
-        cryptService.generateSalt()
+        return cryptService.generateSalt()
             .then(res => {
                 salt = res;
                 return cryptService.createHash(toHash, res)
@@ -55,6 +55,6 @@ describe('cryptService basics', () => {
             .then(res => {
                 return cryptService.validatePassword(invalidPassword, res, salt);
             })
-            .should.be.rejected;
+            .should.be.rejectedWith("Invalid Password.");
     });
 });
