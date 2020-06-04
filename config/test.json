@@ -1,6 +1,6 @@
 {
   "Env": "test",
   "Database": {
-    "filename": ":memory:"
+    "filename": "EveIndustryManager-Test.sql"
   }
 }
