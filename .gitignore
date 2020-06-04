@@ -105,5 +105,8 @@ dist
 
 # IntelliJ IDE
 .idea
+
+# Project Specific
 index.js
 package-lock.json
+*.sql
