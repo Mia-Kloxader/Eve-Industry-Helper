@@ -6,9 +6,9 @@
   "scripts": {
     "start": "cross-env NODE_ENV=development node sources/app.js",
     "production": "cross-env NODE_ENV=production node sources/app.js",
-    "test:services": "cross-env NODE_ENV=test mocha ./tests/initTests.js ./tests/services/*.js",
     "lint": "eslint --ignore-path .gitignore .",
-    "alltests": "run-s lint test:*"
+    "test:services": "cross-env NODE_ENV=test mocha ./tests/initTests.js ./tests/services/*.js",
+    "test:all": "run-s lint test:services"
   },
   "keywords": [],
   "author": {
