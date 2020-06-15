@@ -14,9 +14,14 @@ const log = require("../../sources/logger").createLogger({
 class cryptService {
     createHash(text, salt) {
         return new Promise(async (resolve, reject) => {
-            let hash = await crypto.createHmac('sha512', salt);
-            await hash.update(text);
-            resolve(await hash.digest('hex'));
+            try {
+                let hash = await crypto.createHmac('sha512', salt);
+                await hash.update(text);
+                resolve(await hash.digest('hex'));
+            } catch(err) {
+                log.error("Failed to create hash key.");
+                reject(err);
+            }
         });
     }
 
