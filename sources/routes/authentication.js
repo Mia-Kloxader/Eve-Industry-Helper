@@ -23,16 +23,16 @@ module.exports = function(router) {
             res.redirect('/');
         });
 
-    // router.get('/signup',
-    //     function(req, res){
-    //         res.render('signup');
-    //     });
-    //
-    // router.post('/signup',
-    //     passport.authenticate('signup', { failureRedirect: '/signup' }),
-    //     function(req, res) {
-    //         res.redirect('/');
-    //     });
+    router.get('/signup',
+        function(req, res){
+            res.render('signup');
+        });
+
+    router.post('/signup',
+        passport.authenticate('signup', { failureRedirect: '/signup' }),
+        function(req, res) {
+            res.redirect('/');
+        });
 
     router.get('/logout',
         function(req, res){
