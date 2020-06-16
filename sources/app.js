@@ -16,6 +16,11 @@ const app = express();
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
+// Database Init
+const DatabaseService = require("../sources/services/dbService");
+const dbService = new DatabaseService();
+dbService.loadTemplate();
+
 // Express
 app.use(require('body-parser').urlencoded({ extended: true }));
 app.use(require('express-session')({ secret: 'keyboard cat', resave: false, saveUninitialized: false }));
