@@ -4,7 +4,15 @@
  * Created by Mia Kloxader on 04/06/20
  */
 
+const log = require("../sources/logger").createLogger({
+    level: 'info',
+    context: 'passport-config'
+});
+
 const LocalStrategy   = require('passport-local').Strategy;
+
+const credentialsModel = require("../sources/models/credentials");
+const userService = require("../sources/services/userService");
 
 module.exports = function(passport) {
 
@@ -13,10 +21,17 @@ module.exports = function(passport) {
     });
 
     passport.deserializeUser(function(id, done) {
-        if (id === 1)
-            return done(null, {id: 1, username: "Test", password: "Password"});
-        else
-            return done("User not found.");
+        userService.getUserById(id)
+            .then(user => {
+                return done(null, {
+                    id: user.id,
+                    username: user.username
+                });
+            })
+            .catch(err => {
+                log.error("User not found when deserializing: " + err);
+                return done("User not found.");
+            });
     });
 
     passport.use('signup', new LocalStrategy({
@@ -25,10 +40,14 @@ module.exports = function(passport) {
             passReqToCallback : true
         },
         function(req, username, password, done) {
-
-            // Add user to db if not exist
-            // send same user as login
-
+            userService.registerUser(username, password)
+                .then(user => {
+                    return done(null, {id: user.id, username: user.username});
+                })
+                .catch(err => {
+                    log.error("Failed to register User: " + err);
+                    return done(null, false);
+                });
         }));
 
     passport.use('login', new LocalStrategy({
@@ -37,9 +56,13 @@ module.exports = function(passport) {
             passReqToCallback : true
         },
         function(req, username, password, done) {
-            if (username === "Test" && password === "Password")
-                return done(null, {id: 1, username: "Test", password: "Password"});
-            else
-                return done(null, false);
+            userService.validateCredentials(new credentialsModel(username, password))
+                .then(user => {
+                    return done(null, {id: user.id, username: user.username});
+                })
+                .catch(err => {
+                    log.error("Failed to log in user: " + err);
+                    return done(null, false);
+                });
         }));
 };
