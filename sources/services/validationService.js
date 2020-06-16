@@ -1,7 +1,7 @@
 /**
  * Eve Industry Manager 2020
  *
- * Created by Mia Kloxader on 03/06/20
+ * Created by Mia Kloxader on 15/06/20
  */
 
 const log = require("../../sources/logger").createLogger({
