@@ -33,6 +33,7 @@ require('./passportConfig')(passport);
 // Express Routers
 const mainRouter = require('./routes/mainRouter');
 app.use('/', mainRouter);
+app.use(express.static(path.join(__dirname, 'public')));
 
 // Express Server Start
 app.listen(config.get('Server.port'));
