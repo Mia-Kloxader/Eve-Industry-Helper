@@ -1,0 +1,11 @@
+/* Style page content */
+main {
+    margin-left: 160px; /* Same as the width of the sidebar */
+    position: relative;
+}
+
+body {
+    background-color: #919494;
+    margin: 0;
+    font-family: 'Roboto', sans-serif;
+}

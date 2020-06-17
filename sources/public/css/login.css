@@ -1,0 +1,6 @@
+.login-container {
+    padding-top: 10rem;
+    padding-bottom: 10rem;
+    display: flex;
+    justify-content: center;
+}
