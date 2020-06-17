@@ -1,0 +1,9 @@
+<!-- views/sidebar.ejs -->
+<div class="sidenav">
+    <% if (!user) { %>
+        <a href="/login">Login</a>
+        <a href="/signup">Register</a>
+    <% } else { %>
+        <a href="/profile">Profile</a>
+    <% } %>
+</div>

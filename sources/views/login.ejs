@@ -1,13 +1,33 @@
-<form action="/login" method="post">
-	<div>
-	<label>Username:</label>
-	<input type="text" name="username"/><br/>
+<!-- views/login.ejs -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<%- include('components/header.ejs', {title: 'Login'}); %>
+	<link rel="stylesheet" href="css/login.css">
+	<link rel="stylesheet" href="css/form.css">
+</head>
+<body>
+<%- include('components/sidebar.ejs', {user: undefined}); %>
+<main>
+
+	<div class="login-container">
+		<div class="form-container">
+			<form action="/login" method="post">
+				<div class="form-field">
+					<label>Username</label>
+					<input class="form-input-field" type="text" name="username"/>
+				</div>
+				<div class="form-field">
+					<label>Password</label>
+					<input class="form-input-field" type="password" name="password"/>
+				</div>
+				<div class="form-submit">
+					<input type="submit" value="Login"/>
+				</div>
+			</form>
+		</div>
 	</div>
-	<div>
-	<label>Password:</label>
-	<input type="password" name="password"/>
-	</div>
-	<div>
-	<input type="submit" value="Submit"/>
-	</div>
-</form>
+
+</main>
+</body>
+</html>

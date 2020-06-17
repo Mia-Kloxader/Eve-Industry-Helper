@@ -1,6 +1,19 @@
-<% if (!user) { %>
-	<p><a href="/login">Log In</a>.</p>
-	<p><a href="/signup">Register</a>.</p>
-<% } else { %>
-	<p>Hello, <%= user.username %>. View your <a href="/profile">profile</a>.</p>
-<% } %>
+<!-- views/home.ejs -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<%- include('components/header.ejs', {title: 'Home'}); %>
+</head>
+<body>
+<%- include('components/sidebar.ejs', {user: user}); %>
+<main>
+
+	<% if (!user) { %>
+		<p>You are currently not logged in.</p>
+	<% } else { %>
+		<p>Hello, <%= user.username %>. View your <a href="/profile">profile</a>.</p>
+	<% } %>
+
+</main>
+</body>
+</html>
