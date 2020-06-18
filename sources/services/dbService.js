@@ -76,7 +76,7 @@ module.exports = class dbService {
 
     loadTemplate() {
         return new Promise(async (resolve, reject) => {
-            const dbTemplate = require('../../ressources/dbTemplate');
+            const dbTemplate = require('../../resources/dbTemplate');
 
             for (let table of dbTemplate.tables) {
                 let query = "CREATE TABLE IF NOT EXISTS " + table.table_name + " (";
