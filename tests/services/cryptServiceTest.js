@@ -4,11 +4,6 @@
  * Created by Mia Kloxader on 03/06/20
  */
 
-const log = require("../../sources/logger").createLogger({
-    level: 'info',
-    context: 'crypt-service-test'
-});
-
 const cryptService = require("../../sources/services/cryptService");
 
 describe('cryptService basics', () => {

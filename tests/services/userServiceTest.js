@@ -4,11 +4,6 @@
  * Created by Mia Kloxader on 03/06/20
  */
 
-const log = require("../../sources/logger").createLogger({
-    level: 'info',
-    context: 'user-service-test'
-});
-
 const credentials = require("../../sources/models/credentials");
 
 const userService = require('./../../sources/services/userService');

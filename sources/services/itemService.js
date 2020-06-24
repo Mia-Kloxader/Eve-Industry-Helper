@@ -8,11 +8,6 @@ const config = require('config');
 const fs = require('fs');
 const path = require('path');
 
-const log = require("../../sources/logger").createLogger({
-    level: 'info',
-    context: 'item-service'
-});
-
 class itemService {
     constructor() {
         let typeIDJSON = fs.readFileSync(path.join(__dirname, '..', '..', config.get('ResourcesDir'), config.get('Files.ItemInfo')));
@@ -45,10 +40,6 @@ class itemService {
             } else
                 reject('Parameter should be an array.');
         });
-    }
-
-    getItemByName(itemName) {
-
     }
 }
 

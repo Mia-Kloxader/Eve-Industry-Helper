@@ -13,11 +13,11 @@ const log = require("../../sources/logger").createLogger({
 
 class cryptService {
     createHash(text, salt) {
-        return new Promise(async (resolve, reject) => {
+        return new Promise((resolve, reject) => {
             try {
-                let hash = await crypto.createHmac('sha512', salt);
-                await hash.update(text);
-                resolve(await hash.digest('hex'));
+                let hash = crypto.createHmac('sha512', salt);
+                hash.update(text);
+                resolve(hash.digest('hex'));
             } catch(err) {
                 log.error("Failed to create hash key.");
                 reject(err);
@@ -26,16 +26,16 @@ class cryptService {
     }
 
     generateSalt() {
-        return new Promise(async (resolve, reject) => {
+        return new Promise((resolve) => {
             const saltLength = 16;
-            resolve(await crypto.randomBytes(Math.ceil(saltLength / 2))
+            resolve(crypto.randomBytes(Math.ceil(saltLength / 2))
                 .toString('hex')
                 .slice(0, saltLength));
         });
     }
 
     validatePassword(password, hash, salt) {
-        return new Promise(async (resolve, reject) => {
+        return new Promise((resolve, reject) => {
             this.createHash(password, salt)
                 .then(res => {
                     if (res === hash)

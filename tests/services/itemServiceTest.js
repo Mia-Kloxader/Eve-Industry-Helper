@@ -4,11 +4,6 @@
  * Created by Mia Kloxader on 22/06/20
  */
 
-const log = require("../../sources/logger").createLogger({
-    level: 'info',
-    context: 'item-service-test'
-});
-
 const itemService = require('../../sources/services/itemService');
 
 describe('itemService unit tests', () => {

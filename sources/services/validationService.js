@@ -4,11 +4,6 @@
  * Created by Mia Kloxader on 15/06/20
  */
 
-const log = require("../../sources/logger").createLogger({
-    level: 'info',
-    context: 'validate-service'
-});
-
 const Errors = {
     Username: {
         tooManyChar: "Maximum number of character is 30.",

@@ -4,8 +4,6 @@
  * Created by Mia Kloxader on 03/06/20
  */
 
-const config = require('config');
-
 const log = require("../../sources/logger").createLogger({
     level: 'info',
     context: 'user-service'
@@ -85,7 +83,7 @@ class userService {
                     return dbService.runQuery("INSERT INTO users (username, password, salt) VALUES (?, ?, ?)",
                         [newUser.username, newUser.password, newUser.salt]);
                 })
-                .then(rows => {
+                .then(() => {
                     return dbService.runQuery("SELECT id FROM users WHERE username = ?;",
                         [username])
                 })

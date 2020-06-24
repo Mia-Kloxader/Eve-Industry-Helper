@@ -4,11 +4,6 @@
  * Created by Mia Kloxader on 18/06/20
  */
 
-const log = require("../../sources/logger").createLogger({
-    level: 'info',
-    context: 'blueprint-service-test'
-});
-
 const blueprintService = require('../../sources/services/blueprintService');
 
 describe('blueprintService unit tests', () => {

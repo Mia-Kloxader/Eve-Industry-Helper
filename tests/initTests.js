@@ -7,11 +7,12 @@
 global.config = require('config');
 global.chai = require('chai');
 
-chai.use(require('chai-as-promised'));
-chai.should();
+
+chai.use(require('chai-as-promised')); // eslint-disable-line no-undef
+chai.should(); // eslint-disable-line no-undef
 
 const DatabaseService = require("../sources/services/dbService");
-const dbService = new DatabaseService();
+const dbService = new DatabaseService(); // eslint-disable-line no-unused-vars
 
 before(async () => {
 });

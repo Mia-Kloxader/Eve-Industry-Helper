@@ -62,7 +62,7 @@ module.exports = class dbService {
         if (parameters === undefined)
             parameters = [];
 
-        return new Promise(async (resolve, reject) => {
+        return new Promise((resolve, reject) => {
             this._db.serialize(() => {
                 this._db.all(query, parameters, (err, rows) => {
                     if (err)
@@ -75,28 +75,34 @@ module.exports = class dbService {
     }
 
     loadTemplate() {
-        return new Promise(async (resolve, reject) => {
+        return new Promise((resolve, reject) => {
             const dbTemplate = require('../../resources/dbTemplate');
 
-            for (let table of dbTemplate.tables) {
+            const promises = [];
+
+            for (let i = 0; i < dbTemplate.tables.length; i++) {
+                let table = dbTemplate.tables[i];
                 let query = "CREATE TABLE IF NOT EXISTS " + table.table_name + " (";
-                let first = true;
-                for (let column of table.table_column) {
-                    if (first) {
-                        first = false;
+                for (let j = 0; j < table.table_column.length; j++) {
+                    let column = table.table_column[j];
+
+                    if (j === 0)
                         query += column;
-                    }
                     else
                         query += ", " + column;
                 }
                 query += ");";
-                await this.runQuery(query)
-                    .catch(err => {
-                        log.error("Failed to run Query -> " + query);
-                        reject(err);
-                    });
+                promises.push(this.runQuery(query));
             }
-            resolve(true);
+
+            Promise.all(promises)
+                .then(() => {
+                    resolve(true);
+                })
+                .catch(err => {
+                    log.error("Failed to run Query -> " + err);
+                    reject(err);
+                });
         });
     }
 }

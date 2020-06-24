@@ -8,11 +8,6 @@ const config = require('config');
 const fs = require('fs');
 const path = require('path');
 
-const log = require("../../sources/logger").createLogger({
-    level: 'info',
-    context: 'blueprint-service'
-});
-
 class blueprintService {
     constructor() {
         let fsBpList = fs.readFileSync(path.join(__dirname, '..', '..', config.get('ResourcesDir'), config.get('Files.BlueprintList')));
@@ -23,7 +18,7 @@ class blueprintService {
     }
 
     getBlueprintList() {
-        return new Promise((resolve, reject) => {
+        return new Promise((resolve) => {
             resolve(this.blueprintList);
         });
     }

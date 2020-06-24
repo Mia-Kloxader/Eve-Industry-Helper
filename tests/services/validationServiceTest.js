@@ -4,11 +4,6 @@
  * Created by Mia Kloxader on 15/06/20
  */
 
-const log = require("../../sources/logger").createLogger({
-    level: 'info',
-    context: 'validation-service-test'
-});
-
 const valService = require('../../sources/services/validationService');
 
 describe('validationService unit tests', () => {
