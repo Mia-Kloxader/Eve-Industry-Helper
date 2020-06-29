@@ -1,0 +1,162 @@
+/* Global --------------------------------------- */
+
+.blueprint-info-container {
+    display: flex;
+    margin: 1rem;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    padding: 0.5rem;
+}
+
+.blueprint-section-title-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.blueprint-section-title-container p {
+    font-size: x-large;
+    font-weight: bold;
+}
+
+.blueprint-activities-container {
+    margin-top: 1rem;
+    padding: 0.5rem;
+    width: 100%;
+}
+
+tr.table-name-line th {
+    border-bottom: 1px solid #B0B3B2;
+}
+
+tr.table-total-line td {
+    border-top: 1px solid #B0B3B2;
+}
+
+button {
+    border: 1px solid #B0B3B2;
+    background-color: #717576;
+    margin: 1px;
+    padding: 1px;
+    min-width: 30%;
+    transition: 0.3s;
+}
+
+button:hover {
+    background-color: #919494;
+}
+
+/* Name & Misc --------------------------------------- */
+
+.blueprint-misc-container {
+    padding: 0.5rem;
+    width: 100%;
+}
+
+.blueprint-misc-name-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.blueprint-misc-container .blueprint-misc-name-container p {
+    font-size: xx-large;
+    font-weight: bold;
+}
+
+
+/* Research --------------------------------------- */
+
+.blueprint-research-container {
+    width: 45% !important;
+}
+
+/* Research - Copy --------------------------------------- */
+
+/* Research - Research --------------------------------------- */
+
+/* Manufacturing --------------------------------------- */
+
+.blueprint-manufacturing-container {
+    margin-top: 0.5rem;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+}
+
+.column-name {
+    text-align: left;
+}
+
+.column-quantity {
+    text-align: right;
+}
+
+.column-price {
+    text-align: right;
+    font-size: medium;
+    font-weight: normal;
+}
+
+/* Manufacturing - Input --------------------------------------- */
+
+.blueprint-input-container {
+    display: flex;
+    flex-direction: column;
+    max-width: 20%;
+    padding: 0.5rem;
+    margin-top: 0.5rem;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.blueprint-input-object {
+    display: flex;
+    padding: 0.1rem;
+    justify-content: space-around;
+}
+
+.blueprint-input-object label {
+    flex-grow: 1;
+}
+
+.blueprint-input-object input[type=number] {
+    border: none;
+    background-color: #717576;
+    color: #FFFFFF;
+    border-bottom: 1px solid transparent;
+    border-image: linear-gradient(to right, #13151A , #D0D1D1, #13151A);
+    border-image-slice: 1;
+}
+
+/* Manufacturing - Materials --------------------------------------- */
+
+.material-item-container {
+    margin-top: 0.5rem;
+    width: 100%;
+}
+
+.blueprint-manufacturing-materials {
+    width: 45% !important;
+}
+
+.blueprint-manufacturing-products {
+    width: 45% !important;
+}
+
+/* Manufacturing - Market --------------------------------------- */
+
+/* Invention --------------------------------------- */
+
+/* Misc --------------------------------------- */
+
+input[type="number"] {
+    -webkit-appearance: textfield;
+    -moz-appearance: textfield;
+    appearance: textfield;
+}
+
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+}

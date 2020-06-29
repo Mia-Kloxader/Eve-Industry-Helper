@@ -9,43 +9,92 @@ const blueprintService = require('../../sources/services/blueprintService');
 describe('blueprintService unit tests', () => {
 
     it('blueprintService.getBlueprintList() success', () => {
-        return blueprintService.getBlueprintList()
-            .should.eventually.be.a('array');
+        let promise = blueprintService.getBlueprintList();
+
+        return Promise.all([
+            promise.should.be.fulfilled,
+            promise.should.not.be.rejected,
+            promise.should.eventually.be.an('array')
+        ]);
     });
 
-    it('blueprintService.getBlueprintByTypeid(2769) Success', () => {
-        return blueprintService.getBlueprintByTypeid(2769)
-            .should.be.fulfilled;
+    it('blueprintService.getBlueprintByTypeid() Success', () => {
+        let promise = blueprintService.getBlueprintByTypeid(2769);
+
+        return Promise.all([
+            promise.should.be.fulfilled,
+            promise.should.not.be.rejected,
+            promise.should.eventually.be.an('object'),
+            promise.should.eventually.have.property('activities').and.be.an('object'),
+            promise.should.eventually.have.property('blueprintTypeID').and.be.a('number'),
+            promise.should.eventually.have.property('maxProductionLimit').and.be.a('number'),
+            promise.should.eventually.have.property('name').and.be.a('string'),
+            promise.should.eventually.have.property('volume').and.be.a('number'),
+            promise.should.eventually.have.property('groupID').and.be.a('number'),
+            promise.should.eventually.have.property('basePrice').and.be.a('number')
+        ]);
     });
 
-    it('blueprintService.getBlueprintByTypeid(34) Not Found', () => {
-        return blueprintService.getBlueprintByTypeid(34)
-            .should.be.rejectedWith('Blueprint not found.');
+    it('blueprintService.getBlueprintByTypeid() Not Found', () => {
+        let promise = blueprintService.getBlueprintByTypeid(34);
+
+        return Promise.all([
+            promise.should.be.rejected,
+            promise.should.be.rejectedWith('Blueprint not found.'),
+            promise.should.not.be.fulfilled
+        ]);
     });
 
     it('blueprintService.getBlueprintTypeId() Success', () => {
-        return blueprintService.getBlueprintList()
+        blueprintService.getBlueprintList()
             .then(res => {
-                return blueprintService.getBlueprintTypeId(res[43][1])
-                    .should.be.fulfilled;
+                let promise = blueprintService.getBlueprintTypeId(res[43][1]);
+
+                return Promise.all([
+                    promise.should.be.fulfilled,
+                    promise.should.not.be.rejected,
+                    promise.should.eventually.be.a('number')
+                ]);
             });
     });
 
     it('blueprintService.getBlueprintTypeId() Not Found', () => {
-        return blueprintService.getBlueprintTypeId('InvalidName')
-            .should.be.rejectedWith('Blueprint not found.');
+        let promise = blueprintService.getBlueprintTypeId('InvalidName');
+
+        return Promise.all([
+            promise.should.be.rejected,
+            promise.should.be.rejectedWith('Blueprint not found.'),
+            promise.should.not.be.fulfilled
+        ]);
     });
 
     it('blueprintService.getBlueprintByName() Success', () => {
-        return blueprintService.getBlueprintList()
+        blueprintService.getBlueprintList()
             .then(res => {
-                return blueprintService.getBlueprintByName(res[43][1])
-                    .should.be.fulfilled;
+                let promise = blueprintService.getBlueprintByName(res[43][1]);
+
+                return Promise.all([
+                    promise.should.be.fulfilled,
+                    promise.should.not.be.rejected,
+                    promise.should.eventually.be.an('object'),
+                    promise.should.eventually.have.property('activities').and.be.an('object'),
+                    promise.should.eventually.have.property('blueprintTypeID').and.be.a('number'),
+                    promise.should.eventually.have.property('maxProductionLimit').and.be.a('number'),
+                    promise.should.eventually.have.property('name').and.be.a('string'),
+                    promise.should.eventually.have.property('volume').and.be.a('number'),
+                    promise.should.eventually.have.property('groupID').and.be.a('number'),
+                    promise.should.eventually.have.property('basePrice').and.be.a('number')
+                ]);
             });
     });
 
     it('blueprintService.getBlueprintByName() Not Found', () => {
-        return blueprintService.getBlueprintByName('InvalidName')
-            .should.be.rejectedWith('Blueprint not found.');
+        let promise = blueprintService.getBlueprintByName('InvalidName');
+
+        return Promise.all([
+            promise.should.be.rejected,
+            promise.should.be.rejectedWith('Blueprint not found.'),
+            promise.should.not.be.fulfilled
+        ]);
     });
 });

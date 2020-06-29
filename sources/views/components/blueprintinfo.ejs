@@ -1,0 +1,410 @@
+<% if (blueprintinfo.hasOwnProperty('activities')) { %>
+    <div class="blueprint-info-container">
+        <div class="blueprint-misc-container work-in-progress middle-container">
+            <div class="blueprint-misc-name-container top-container">
+                <p><%- blueprintinfo.name %></p>
+            </div>
+            <p>TypeID: <%- blueprintinfo.blueprintTypeID %></p>
+            <p>Base Price: <%- (blueprintinfo.basePrice).toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&.') %> ISK</p>
+            <!--        <p>maxProductionLimit: <%- blueprintinfo.maxProductionLimit %></p>-->
+            <!--        <p>volume: <%- blueprintinfo.volume %></p>-->
+            <!--        <p>iconID: <%- blueprintinfo.iconID %></p>-->
+            <!--        <p>groupID: <%- blueprintinfo.groupID %></p>-->
+        </div>
+
+        <!--    Copying    -->
+        <% if (blueprintinfo.activities.hasOwnProperty('copying')) { %>
+            <div class="blueprint-activities-container blueprint-research-container work-in-progress middle-container">
+                <div class="blueprint-section-title-container top-container">
+                    <p>Copying</p>
+                </div>
+                <% let copyTime = new Date(blueprintinfo.activities.copying.time * 1000).toISOString().substr(11, 8); %>
+                <p>Copying time per run: <%- copyTime %></p>
+                <p>Max run per copy: <%- blueprintinfo.maxProductionLimit %></p>
+            </div>
+        <% } %>
+        <!--    Copying    -->
+
+        <!--    Research    -->
+        <% if (blueprintinfo.activities.hasOwnProperty('research_material')) { %>
+            <% if (blueprintinfo.activities.hasOwnProperty('research_time')) { %>
+                <div class="blueprint-activities-container blueprint-research-container work-in-progress middle-container">
+                    <div class="blueprint-section-title-container top-container">
+                        <p>Research</p>
+                    </div>
+                    <% let METime = new Date(blueprintinfo.activities.research_material.time * 1000).toISOString().substr(11, 8); %>
+                    <p>ME Time: <%- METime %></p>
+                    <% let TETime = new Date(blueprintinfo.activities.research_time.time * 1000).toISOString().substr(11, 8); %>
+                    <p>TE Time: <%- TETime %></p>
+                </div>
+            <% } %>
+        <% } %>
+        <!--    Research    -->
+
+        <!--    Manufacturing    -->
+        <% if (blueprintinfo.activities.hasOwnProperty('manufacturing')) { %>
+            <div class="blueprint-activities-container middle-container">
+                <!--    Manufacturing Header    -->
+                <div class="blueprint-section-title-container top-container">
+                    <p>Manufacturing</p>
+                </div>
+                <!--    Manufacturing Header    -->
+
+                <!--    Manufacturing Parameters    -->
+                <div class="blueprint-input-container top-container">
+                    <div class="blueprint-input-object">
+                        <label for="ME-input">ME </label>
+                        <input type="number" id="ME-input" min="0" max="10" value="10">
+                    </div>
+                    <div class="blueprint-input-object">
+                        <label for="TE-input">TE </label>
+                        <input type="number" id="TE-input" min="0" max="20" value="20" step="2">
+                    </div>
+
+                    <div class="blueprint-input-object">
+                        <label for="brokerTax-input">Broker Tax </label>
+                        <input type="number" id="brokerTax-input" min="0" max="20" value="0.01" step="0.01">
+                    </div>
+                    <div class="blueprint-input-object">
+                        <label for="saleTax-input">Sale Tax </label>
+                        <input type="number" id="saleTax-input" min="0" max="20" value="0.05" step="0.01">
+                    </div>
+                    <div class="blueprint-input-object work-in-progress">
+                        <label for="stationTax-input">Manuf. Station Tax </label>
+                        <input type="number" id="stationTax-input" min="0" max="20" value="0" step="0.01">
+                    </div>
+
+                    <div class="blueprint-input-object">
+                        <button onclick="updateManufacturing()">Update</button>
+                    </div>
+                </div>
+                <!--    Manufacturing Parameters    -->
+
+                <!--    Manufacturing Materials    -->
+                <div class="blueprint-manufacturing-container">
+                    <!--    Manufacturing Materials Left    -->
+                    <div class="blueprint-manufacturing-materials top-container">
+                        <table id="materials-table" class="material-item-container">
+                            <tr class="table-name-line">
+                                <th>Name</th>
+                                <th>Quantity</th>
+                                <th>Buy Price</th>
+                                <th>Sell Price</th>
+                            </tr>
+                            <% for (let idx = 0; idx < blueprintinfo.activities.manufacturing.materials.length; idx++) { %>
+                                <tr>
+                                    <td class="column-name" id="material-name-<%- blueprintinfo.activities.manufacturing.materials[idx].typeID %>"></td>
+                                    <td class="column-quantity" id="material-quantity-<%- blueprintinfo.activities.manufacturing.materials[idx].typeID %>"></td>
+                                    <td class="column-price" id="material-price-buy-<%- blueprintinfo.activities.manufacturing.materials[idx].typeID %>"></td>
+                                    <td class="column-price" id="material-price-sell-<%- blueprintinfo.activities.manufacturing.materials[idx].typeID %>"></td>
+                                </tr>
+                            <% } %>
+                            <tr class="table-total-line">
+                                <td class="column-name" id="material-name-total">Total</td>
+                                <td class="column-quantity" id="material-quantity-total"></td>
+                                <td class="column-price" id="material-price-buy-total">Test</td>
+                                <td class="column-price" id="material-price-sell-total">Test</td>
+                            </tr>
+                        </table>
+                    </div>
+                    <!--    Manufacturing Materials Left    -->
+                    <!--    Manufacturing Materials Right    -->
+                    <div class="blueprint-manufacturing-products top-container">
+                        <table id="products-table" class="material-item-container">
+                            <tr class="table-name-line">
+                                <th>Name</th>
+                                <th>Quantity</th>
+                                <th>Buy Price</th>
+                                <th>Sell Price</th>
+                            </tr>
+                            <% for (let idx = 0; idx < blueprintinfo.activities.manufacturing.products.length; idx++) { %>
+                                <tr>
+                                    <td class="column-name" id="product-name-<%- blueprintinfo.activities.manufacturing.products[idx].typeID %>">Test</td>
+                                    <td class="column-quantity" id="product-quantity-<%- blueprintinfo.activities.manufacturing.products[idx].typeID %>">Test</td>
+                                    <td class="column-price" id="product-price-buy-<%- blueprintinfo.activities.manufacturing.products[idx].typeID %>">Test</td>
+                                    <td class="column-price" id="product-price-sell-<%- blueprintinfo.activities.manufacturing.products[idx].typeID %>">Test</td>
+                                </tr>
+                            <% } %>
+                            <tr class="table-total-line">
+                                <td class="column-name" id="product-name-total">Total</td>
+                                <td class="column-quantity" id="product-quantity-total"></td>
+                                <td class="column-price" id="product-price-buy-total">Test</td>
+                                <td class="column-price" id="product-price-sell-total">Test</td>
+                            </tr>
+                        </table>
+                    </div>
+                    <!--    Manufacturing Materials Right    -->
+                </div>
+                <!--    Manufacturing Materials    -->
+
+                <!--    Manufacturing Market    -->
+                <table class="material-item-container top-container">
+                    <tr class="table-name-line">
+                        <th>Type</th>
+                        <th>Material Cost</th>
+                        <th>Material Cost VAT</th>
+                        <th class="work-in-progress">Job Cost</th>
+                        <th>Sell Price</th>
+                        <th>Sell Price VAT</th>
+                        <th>Profit VAT</th>
+                        <th>ISK / Min VAT</th>
+                    </tr>
+                    <tr>
+                        <th class="column-name" >Buy -> Sell</th>
+                        <th id="buy-sell-production-cost" class="column-price" ></th>
+                        <th id="buy-sell-production-cost-vat" class="column-price" ></th>
+                        <th class="work-in-progress" id="buy-sell-job-cost" class="column-price" ></th>
+                        <th id="buy-sell-sell-price" class="column-price" ></th>
+                        <th id="buy-sell-sell-price-vat" class="column-price" ></th>
+                        <th id="buy-sell-profit-vat" class="column-price" ></th>
+                        <th id="buy-sell-isk-min-vat" class="column-price" ></th>
+                    </tr>
+                    <tr>
+                        <th class="column-name" >Buy -> Buy</th>
+                        <th id="buy-buy-production-cost" class="column-price" ></th>
+                        <th id="buy-buy-production-cost-vat" class="column-price" ></th>
+                        <th class="work-in-progress" id="buy-buy-job-cost" class="column-price" ></th>
+                        <th id="buy-buy-sell-price" class="column-price" ></th>
+                        <th id="buy-buy-sell-price-vat" class="column-price" ></th>
+                        <th id="buy-buy-profit-vat" class="column-price" ></th>
+                        <th id="buy-buy-isk-min-vat" class="column-price" ></th>
+                    </tr>
+                    <tr>
+                        <th class="column-name" >Sell -> Buy</th>
+                        <th id="sell-buy-production-cost" class="column-price" ></th>
+                        <th id="sell-buy-production-cost-vat" class="column-price" ></th>
+                        <th class="work-in-progress" id="sell-buy-job-cost" class="column-price" ></th>
+                        <th id="sell-buy-sell-price" class="column-price" ></th>
+                        <th id="sell-buy-sell-price-vat" class="column-price" ></th>
+                        <th id="sell-buy-profit-vat" class="column-price" ></th>
+                        <th id="sell-buy-isk-min-vat" class="column-price" ></th>
+                    </tr>
+                    <tr>
+                        <th class="column-name" >Sell -> Sell</th>
+                        <th id="sell-sell-production-cost" class="column-price" ></th>
+                        <th id="sell-sell-production-cost-vat" class="column-price" ></th>
+                        <th class="work-in-progress" id="sell-sell-job-cost" class="column-price" ></th>
+                        <th id="sell-sell-sell-price" class="column-price" ></th>
+                        <th id="sell-sell-sell-price-vat" class="column-price" ></th>
+                        <th id="sell-sell-profit-vat" class="column-price" ></th>
+                        <th id="sell-sell-isk-min-vat" class="column-price" ></th>
+                    </tr>
+                </table>
+                <!--    Manufacturing Market    -->
+
+            </div>
+        <% } %>
+        <!--    Manufacturing    -->
+
+        <!--    Invention    -->
+        <% if (blueprintinfo.activities.hasOwnProperty('invention')) { %>
+            <div class="blueprint-activities-container middle-container work-in-progress">
+                <div class="blueprint-section-title-container top-container">
+                    <p>Invention</p>
+                </div>
+                <p>Invention Time: <%- blueprintinfo.activities.invention.time %></p>
+            </div>
+        <% } %>
+        <!--    Invention    -->
+
+    </div>
+<% } %>
+
+<!--    Script    -->
+<script>
+    const blueprintInfo = <%- JSON.stringify(blueprintinfo) %>;
+
+    function addString(a, b) {
+        const parsed_a = parseInt(a, 10);
+        const parsed_b = parseInt(b, 10);
+
+        return (parsed_a + parsed_b).toString();
+    }
+
+    function roundUp(number) {
+        if (Math.round(number) < number)
+            return Math.round(number) + 1;
+        else
+            return Math.round(number);
+    }
+
+    function formatPrice(elemId) {
+        document.getElementById(elemId).innerHTML = (parseFloat(document.getElementById(elemId).innerHTML)).toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&.') + " ISK";
+    }
+
+    function formatQuantity(elemId) {
+        document.getElementById(elemId).innerHTML = parseInt(document.getElementById(elemId).innerHTML).toLocaleString('en').replace(/,/g,'.');
+    }
+
+    function formatManufacturingTables() {
+        // Format materials info
+        for (let idx = 0; idx < blueprintInfo.activities.manufacturing.materials.length; idx++) {
+            const curTypeID = blueprintInfo.activities.manufacturing.materials[idx].typeID;
+            formatPrice("material-price-buy-" + curTypeID);
+            formatPrice("material-price-sell-" + curTypeID);
+            formatQuantity("material-quantity-" + curTypeID);
+        }
+        formatPrice("material-price-buy-total");
+        formatPrice("material-price-sell-total");
+
+        // Format products info
+        for (let idx = 0; idx < blueprintInfo.activities.manufacturing.products.length; idx++) {
+            const curTypeID = blueprintInfo.activities.manufacturing.products[idx].typeID;
+            formatPrice("product-price-buy-" + curTypeID);
+            formatPrice("product-price-sell-" + curTypeID);
+            formatQuantity("product-quantity-" + curTypeID);
+        }
+        formatPrice("product-price-buy-total");
+        formatPrice("product-price-sell-total");
+    }
+
+    function formatManufacturingOverview() {
+        // Buy -> Sell
+        formatPrice("buy-sell-production-cost");
+        formatPrice("buy-sell-production-cost-vat");
+        formatPrice("buy-sell-job-cost");
+        formatPrice("buy-sell-sell-price");
+        formatPrice("buy-sell-sell-price-vat");
+        formatPrice("buy-sell-profit-vat");
+        formatPrice("buy-sell-isk-min-vat");
+
+        // Buy -> Buy
+        formatPrice("buy-buy-production-cost");
+        formatPrice("buy-buy-production-cost-vat");
+        formatPrice("buy-buy-job-cost");
+        formatPrice("buy-buy-sell-price");
+        formatPrice("buy-buy-sell-price-vat");
+        formatPrice("buy-buy-profit-vat");
+        formatPrice("buy-buy-isk-min-vat");
+
+        // Sell -> Buy
+        formatPrice("sell-buy-production-cost");
+        formatPrice("sell-buy-production-cost-vat");
+        formatPrice("sell-buy-job-cost");
+        formatPrice("sell-buy-sell-price");
+        formatPrice("sell-buy-sell-price-vat");
+        formatPrice("sell-buy-profit-vat");
+        formatPrice("sell-buy-isk-min-vat");
+
+        // Sell -> Sell
+        formatPrice("sell-sell-production-cost");
+        formatPrice("sell-sell-production-cost-vat");
+        formatPrice("sell-sell-job-cost");
+        formatPrice("sell-sell-sell-price");
+        formatPrice("sell-sell-sell-price-vat");
+        formatPrice("sell-sell-profit-vat");
+        formatPrice("sell-sell-isk-min-vat");
+    }
+
+    function fillManufacturingTables() {
+        // Fill materials info
+        document.getElementById("material-price-buy-total").innerHTML = '0';
+        document.getElementById("material-price-sell-total").innerHTML = '0';
+
+        for (let idx = 0; idx < blueprintInfo.activities.manufacturing.materials.length; idx++) {
+            const curTypeID = blueprintInfo.activities.manufacturing.materials[idx].typeID;
+            let curQuantity = blueprintInfo.activities.manufacturing.materials[idx].quantity
+
+            // Applying ME
+            const MEValue = document.getElementById('ME-input').value;
+            console.log((100 - MEValue) / 100);
+            console.log(curQuantity * ((100 - MEValue) / 100));
+            console.log(roundUp(curQuantity * ((100 - MEValue) / 100)));
+            curQuantity = roundUp(curQuantity * ((100 - MEValue) / 100));
+
+            document.getElementById("material-quantity-" + curTypeID).innerHTML = curQuantity;
+            for (let j = 0; j < blueprintInfo.itemInfo.length; j++) {
+                if (blueprintInfo.itemInfo[j].typeID == blueprintInfo.activities.manufacturing.materials[idx].typeID)
+                    document.getElementById("material-name-" + curTypeID).innerHTML = blueprintInfo.itemInfo[j].name;
+            }
+            for (let j = 0; j < blueprintInfo.itemPrices.length; j++) {
+                if (blueprintInfo.itemPrices[j].typeID == blueprintInfo.activities.manufacturing.materials[idx].typeID) {
+                    document.getElementById("material-price-buy-" + curTypeID).innerHTML = blueprintInfo.itemPrices[j].buy.max;
+                    document.getElementById("material-price-buy-total").innerHTML = addString(document.getElementById("material-price-buy-total").innerHTML, (curQuantity *  blueprintInfo.itemPrices[j].buy.max));
+                    document.getElementById("material-price-sell-" + curTypeID).innerHTML = blueprintInfo.itemPrices[j].sell.min;
+                    document.getElementById("material-price-sell-total").innerHTML = addString(document.getElementById("material-price-sell-total").innerHTML, (curQuantity *  blueprintInfo.itemPrices[j].sell.min));
+                }
+            }
+        }
+
+        // Fill products info
+        document.getElementById("product-price-buy-total").innerHTML = '0';
+        document.getElementById("product-price-sell-total").innerHTML = '0';
+
+        for (let idx = 0; idx < blueprintInfo.activities.manufacturing.products.length; idx++) {
+            const curTypeID = blueprintInfo.activities.manufacturing.products[idx].typeID;
+            const curQuantity = blueprintInfo.activities.manufacturing.products[idx].quantity
+
+            document.getElementById("product-quantity-" + curTypeID).innerHTML = blueprintInfo.activities.manufacturing.products[idx].quantity;
+            for (let j = 0; j < blueprintInfo.itemInfo.length; j++) {
+                if (blueprintInfo.itemInfo[j].typeID == blueprintInfo.activities.manufacturing.products[idx].typeID)
+                    document.getElementById("product-name-" + curTypeID).innerHTML = blueprintInfo.itemInfo[j].name;
+            }
+            for (let j = 0; j < blueprintInfo.itemPrices.length; j++) {
+                if (blueprintInfo.itemPrices[j].typeID == blueprintInfo.activities.manufacturing.products[idx].typeID) {
+                    document.getElementById("product-price-buy-" + curTypeID).innerHTML = blueprintInfo.itemPrices[j].buy.max;
+                    document.getElementById("product-price-buy-total").innerHTML = addString(document.getElementById("product-price-buy-total").innerHTML, (curQuantity *  blueprintInfo.itemPrices[j].buy.max));
+                    document.getElementById("product-price-sell-" + curTypeID).innerHTML = blueprintInfo.itemPrices[j].sell.min;
+                    document.getElementById("product-price-sell-total").innerHTML = addString(document.getElementById("product-price-sell-total").innerHTML, (curQuantity *  blueprintInfo.itemPrices[j].sell.min));
+                }
+            }
+        }
+    }
+
+    function fillManufacturingOverview() {
+        const materialBuyPrice = parseFloat(document.getElementById("material-price-buy-total").innerHTML);
+        const materialSellPrice = parseFloat(document.getElementById("material-price-sell-total").innerHTML);
+        const productBuyPrice = parseFloat(document.getElementById("product-price-buy-total").innerHTML);
+        const productSellPrice = parseFloat(document.getElementById("product-price-sell-total").innerHTML);
+        const prodTax = 0;
+        const brokerTax = document.getElementById('brokerTax-input').value;
+        const saleTax = document.getElementById('saleTax-input').value;
+        const productionTime = parseInt(blueprintInfo.activities.manufacturing.time) / 60;
+
+        // Buy -> Sell
+        document.getElementById("buy-sell-production-cost").innerHTML = materialBuyPrice.toString();
+        document.getElementById("buy-sell-production-cost-vat").innerHTML = (materialBuyPrice + (materialBuyPrice * brokerTax)).toString();
+        document.getElementById("buy-sell-job-cost").innerHTML = "0";
+        document.getElementById("buy-sell-sell-price").innerHTML = productSellPrice.toString();
+        document.getElementById("buy-sell-sell-price-vat").innerHTML = (productSellPrice - (productSellPrice * saleTax) - (productSellPrice * brokerTax)).toString();
+        document.getElementById("buy-sell-profit-vat").innerHTML = ((productSellPrice - (productSellPrice * saleTax) - (productSellPrice * brokerTax)) - (materialBuyPrice + (materialBuyPrice * brokerTax))).toString();
+        document.getElementById("buy-sell-isk-min-vat").innerHTML = (((productSellPrice - (productSellPrice * saleTax) - (productSellPrice * brokerTax)) - (materialBuyPrice + (materialBuyPrice * brokerTax))) / productionTime).toString();
+
+        // Buy -> Buy
+        document.getElementById("buy-buy-production-cost").innerHTML = materialBuyPrice.toString();
+        document.getElementById("buy-buy-production-cost-vat").innerHTML = (materialBuyPrice + (materialBuyPrice * brokerTax)).toString();
+        document.getElementById("buy-buy-job-cost").innerHTML = "0";
+        document.getElementById("buy-buy-sell-price").innerHTML = productBuyPrice.toString();
+        document.getElementById("buy-buy-sell-price-vat").innerHTML = productBuyPrice.toString();
+        document.getElementById("buy-buy-profit-vat").innerHTML = (productBuyPrice - (materialBuyPrice + (materialBuyPrice * brokerTax))).toString();
+        document.getElementById("buy-buy-isk-min-vat").innerHTML = ((productBuyPrice - (materialBuyPrice + (materialBuyPrice * brokerTax))) / productionTime).toString();
+
+        // Sell -> Buy
+        document.getElementById("sell-buy-production-cost").innerHTML = materialSellPrice.toString();
+        document.getElementById("sell-buy-production-cost-vat").innerHTML = materialSellPrice.toString();
+        document.getElementById("sell-buy-job-cost").innerHTML = "0";
+        document.getElementById("sell-buy-sell-price").innerHTML = productBuyPrice.toString();
+        document.getElementById("sell-buy-sell-price-vat").innerHTML = productBuyPrice.toString();
+        document.getElementById("sell-buy-profit-vat").innerHTML = (productBuyPrice - materialSellPrice).toString();
+        document.getElementById("sell-buy-isk-min-vat").innerHTML = ((productBuyPrice - materialSellPrice) / productionTime).toString();
+
+        // Sell -> Sell
+        document.getElementById("sell-sell-production-cost").innerHTML = materialSellPrice.toString();
+        document.getElementById("sell-sell-production-cost-vat").innerHTML = materialSellPrice.toString();
+        document.getElementById("sell-sell-job-cost").innerHTML = "0";
+        document.getElementById("sell-sell-sell-price").innerHTML = productSellPrice.toString();
+        document.getElementById("sell-sell-sell-price-vat").innerHTML = (productSellPrice - (productSellPrice * saleTax) - (productSellPrice * brokerTax)).toString();
+        document.getElementById("sell-sell-profit-vat").innerHTML = ((productSellPrice - (productSellPrice * saleTax) - (productSellPrice * brokerTax)) - materialSellPrice).toString();
+        document.getElementById("sell-sell-isk-min-vat").innerHTML = (((productSellPrice - (productSellPrice * saleTax) - (productSellPrice * brokerTax)) - materialSellPrice) / productionTime).toString();
+    }
+
+    function updateManufacturing() {
+        fillManufacturingTables();
+        fillManufacturingOverview();
+        formatManufacturingTables();
+        formatManufacturingOverview();
+    }
+
+    updateManufacturing();
+</script>
+<!--    Script    -->

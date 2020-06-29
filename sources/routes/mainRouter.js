@@ -8,5 +8,6 @@ const express = require('express');
 let router = express.Router();
 
 require('./authentication')(router);
+require('./industry')(router);
 
 module.exports = router;

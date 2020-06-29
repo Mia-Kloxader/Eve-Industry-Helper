@@ -17,6 +17,10 @@ class marketService {
     getItemPrice(typeID, systemID) {
         log.info('Fetching item ' + typeID + ' price.');
         return new Promise((resolve, reject) => {
+            if (systemID === undefined) {
+                reject('SystemID must be provided.');
+                return;
+            }
             const url = 'http://api.evemarketer.com/ec/marketstat/json?&usesystem=' + systemID + '&typeid=' + typeID;
 
             request(url,(error, response, body) => {
@@ -33,6 +37,10 @@ class marketService {
     getItemsPrice(typeIDs, systemID) {
         log.info('fetching item ' + typeIDs + ' price.');
         return new Promise((resolve, reject) => {
+            if (systemID === undefined) {
+                reject('SystemID must be provided.');
+                return;
+            }
             if (Array.isArray(typeIDs)) {
                 let url = 'http://api.evemarketer.com/ec/marketstat/json?&usesystem=' + systemID + '&typeid=';
 
