@@ -7,6 +7,13 @@
     "start": "cross-env NODE_ENV=development node sources/app.js",
     "production": "cross-env NODE_ENV=production node sources/app.js",
     "lint": "eslint --ignore-path .gitignore .",
+    "test:service:blueprint": "cross-env NODE_ENV=test mocha ./tests/initTests.js ./tests/services/blueprintServiceTest.js",
+    "test:service:crypt": "cross-env NODE_ENV=test mocha ./tests/initTests.js ./tests/services/cryptServiceTest.js",
+    "test:service:database": "cross-env NODE_ENV=test mocha ./tests/initTests.js ./tests/services/dbServiceTest.js",
+    "test:service:item": "cross-env NODE_ENV=test mocha ./tests/initTests.js ./tests/services/itemServiceTest.js",
+    "test:service:market": "cross-env NODE_ENV=test mocha ./tests/initTests.js ./tests/services/marketServiceTest.js",
+    "test:service:user": "cross-env NODE_ENV=test mocha ./tests/initTests.js ./tests/services/userServiceTest.js",
+    "test:service:validation": "cross-env NODE_ENV=test mocha ./tests/initTests.js ./tests/services/validationServiceTest.js",
     "test:services": "cross-env NODE_ENV=test mocha ./tests/initTests.js ./tests/services/*.js",
     "test:all": "run-s lint test:services"
   },
