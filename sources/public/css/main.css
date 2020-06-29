@@ -9,3 +9,47 @@ body {
     margin: 0;
     font-family: 'Roboto', sans-serif;
 }
+
+.top-container {
+    color: #D0D1D1;
+    background-color: #13151A;
+    border: 1px solid #525557;
+}
+
+.middle-container {
+    color: #D0D1D1;
+    background-color: #323539;
+    border: 1px solid #717576;
+}
+
+/*
+    Development related CSS Below
+*/
+
+/*div {*/
+/*    border: 1px solid black; !* temporary *!*/
+/*}*/
+
+.work-in-progress {
+    position: relative;
+}
+
+.work-in-progress:after {
+    content: "WIP";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: white;
+    opacity: 0.2;
+    overflow: hidden;
+    color: black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: x-large;
+    font-weight: bold;
+}
+
+/* Development related CSS */

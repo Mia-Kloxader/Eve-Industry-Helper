@@ -3,10 +3,8 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    border: 1px solid #525557; /* temporary */
-    background-color: #13151A;
+    border: 1px solid #525557;
     padding: 2rem;
-    color: #D0D1D1;
     width: max-content;
 }
 
@@ -52,7 +50,7 @@
 .form-input-field {
     border: none;
     background-color: #717576;
-    color: #D0D1D1;
+    color: #FFFFFF;
     border-bottom: 1px solid transparent;
     border-image: linear-gradient(to right, #13151A , #D0D1D1, #13151A);
     border-image-slice: 1;
