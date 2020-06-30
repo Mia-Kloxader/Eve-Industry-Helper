@@ -1,10 +1,33 @@
 <!-- views/sidebar.ejs -->
 <div class="sidenav">
+    <div class="sidenav-top-element">
         <% if (!user) { %>
+            <div class="sidenav-element-container">
                 <a href="/login">Login</a>
+            </div>
+            <div class="sidenav-element-container">
                 <a href="/signup">Register</a>
+            </div>
         <% } else { %>
+            <div class="sidenav-element-container">
                 <a href="/profile">Profile</a>
+            </div>
+            <div class="sidenav-element-container">
                 <a href="/industry/blueprintsearch">Search</a>
+            </div>
         <% } %>
+    </div>
+    <div class="sidenav-bottom-element">
+        <div class="sidenav-element-container">
+            <a href="/about">About</a>
+        </div>
+        <% if (user) { %>
+            <div class="sidenav-element-container">
+                <a href="/logout">Logout</a>
+            </div>
+        <% } %>
+        <div class="sidenav-element-container sidenav-bottom-element eih-version">
+            <p>Eve Industry Helper v<%- eihVersion %></p>
+        </div>
+    </div>
 </div>

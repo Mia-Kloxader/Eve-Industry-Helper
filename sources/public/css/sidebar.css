@@ -1,27 +1,51 @@
 /* The sidebar menu */
 .sidenav {
-    font-family: 'Roboto', sans-serif;
+    /* Sidebar behaviour */
     height: 100%; /* Full-height: remove this if you want "auto" height */
+    max-width: 160px; /* Set the width of the sidebar */
     width: 160px; /* Set the width of the sidebar */
     position: fixed; /* Fixed Sidebar (stay in place on scroll) */
     z-index: 1; /* Stay on top */
     top: 0; /* Stay at the top */
     left: 0;
-    background-color: #13151a; /* Black */
     overflow-x: hidden; /* Disable horizontal scroll */
-    padding-top: 20px;
+    /* Sidebar behaviour */
+
+    font-family: 'Roboto', sans-serif;
+    background-color: #13151a;
+    color: #D0D1D1;
+    font-size: 1.2rem;
+    font-weight: normal;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding-top: 1rem;
 }
 
-/* The navigation menu links */
-.sidenav a {
-    padding: 6px 8px 6px 16px;
+.sidenav-element-container {
+    margin-top: 0.4rem;
+    transition-duration: 0.3s;
+}
+
+.sidenav-element-container a {
+    padding-left: 1rem;
     text-decoration: none;
-    font-size: 25px;
     color: #e3e3e3;
-    display: block;
 }
 
-/* When you mouse over the navigation links, change their color */
-.sidenav a:hover {
-    color: #ffffff;
+.sidenav-element-container a:hover {
+    color: #588da8;
+}
+
+.sidenav-top-element {
+}
+
+.sidenav-bottom-element {
+    padding-bottom: 0.5rem;
+}
+
+.eih-version {
+    font-size: small;
+    padding-left: 1rem;
 }
