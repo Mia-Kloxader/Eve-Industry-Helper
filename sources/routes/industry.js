@@ -28,7 +28,7 @@ module.exports = function(router) {
                             })
                             .catch(err => {
                                 log.error('Failed to bpInfo: ' + err);
-                                res.render('/', { user: req.user });
+                                res.redirect('/');
                             });
                     }
                     else
@@ -36,7 +36,7 @@ module.exports = function(router) {
                 })
                 .catch(err => {
                     log.error('Failed to fetch bpList: ' + err);
-                    res.render('/', { user: req.user });
+                    res.redirect('/');
                 })
         });
 };

@@ -8,7 +8,6 @@ const config = require('config');
 
 let reqsec = undefined;
 if (config.get('PM2') === true) {
-    console.log('plop');
     const io = module.require('@pm2/io');
 
     reqsec = io.meter({
