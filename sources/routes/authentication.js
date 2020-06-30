@@ -9,7 +9,12 @@ const passport = require('passport');
 module.exports = function(router) {
     router.get('/',
         function(req, res) {
-            res.render('home', { user: req.user });
+            res.render('about', { user: req.user });
+        });
+
+    router.get('/about',
+        function(req, res) {
+            res.render('about', { user: req.user });
         });
 
     router.get('/login',

@@ -3,20 +3,15 @@
 <html lang="en">
 <head>
     <%- include('components/header.ejs', {title: 'Profile'}); %>
+    <link rel="stylesheet" href="/css/profile.css">
 </head>
 <body>
 <%- include('components/sidebar.ejs', {user: user}); %>
 <main>
 
-    <p>
-        ID: <%= user.id %><br/>
-        Username: <%= user.username %><br/>
-        Name: <%= user.displayName %><br/>
-        <% if (user.emails) { %>
-            Email: <%= user.emails[0].value %><br/>
-        <% } %>
-    </p>
-    <a href="/logout">Log out</a>
+    <div class="about-container middle-container">
+        <p>Username: <%= user.username %></p>
+    </div>
 
 </main>
 </body>
