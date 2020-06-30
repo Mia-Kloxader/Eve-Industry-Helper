@@ -1,0 +1,18 @@
+<!-- views/home.ejs -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<%- include('components/header.ejs', {title: 'About'}); %>
+	<link rel="stylesheet" href="/css/profile.css">
+</head>
+<body>
+<%- include('components/sidebar.ejs', {user: user}); %>
+<main>
+
+	<div class="about-container middle-container not-found-container">
+		<p>404</p>
+	</div>
+
+</main>
+</body>
+</html>

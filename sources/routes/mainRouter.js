@@ -10,4 +10,8 @@ let router = express.Router();
 require('./authentication')(router);
 require('./industry')(router);
 
+router.get('*', function(req, res){
+    res.status('404').render('404', { user: req.user });
+});
+
 module.exports = router;

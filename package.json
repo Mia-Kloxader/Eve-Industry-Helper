@@ -1,6 +1,6 @@
 {
   "name": "eve-industry-helper",
-  "version": "0.0.1",
+  "version": "0.0.3",
   "description": "Eve Industry Helper is a tool to help you manage your industry in EVE Online.",
   "main": "index.js",
   "scripts": {

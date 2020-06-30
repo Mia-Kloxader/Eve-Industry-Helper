@@ -1,0 +1,20 @@
+<!-- views/home.ejs -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<%- include('components/header.ejs', {title: 'About'}); %>
+	<link rel="stylesheet" href="/css/profile.css">
+</head>
+<body>
+<%- include('components/sidebar.ejs', {user: user}); %>
+<main>
+
+	<div class="about-container middle-container">
+		<p>You aren't supposed to be here.</p>
+		<p>If you feel like helping me please drop me a bug report at the link below.</p>
+		<a>https://github.com/Mia-Kloxader/Eve-Industry-Helper/issues</a>
+	</div>
+
+</main>
+</body>
+</html>

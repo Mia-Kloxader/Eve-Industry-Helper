@@ -17,6 +17,11 @@ module.exports = function(router) {
             res.render('about', { user: req.user });
         });
 
+    router.get('/error',
+        function(req, res) {
+            res.render('error', { user: req.user });
+        });
+
     router.get('/login',
         function(req, res){
             res.render('login');
