@@ -1,7 +1,7 @@
 {
   "Version" : "0.0.2",
   "Env": "default",
-  "PM2": true,
+  "PM2": false,
   "Database": {
     "filename": "EveIndustryManager.sql"
   },
